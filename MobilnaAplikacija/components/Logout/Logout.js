@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Button, View, Text } from 'react-native';
 
+// Staviti na newsfeed ili unutar drawer menija
 class Logout extends Component {
     state = {
         userID: ""
