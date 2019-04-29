@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-class Ispiti extends React.Component {
+export default class PrijavljeniIspiti extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style = {styles.naslov1}>Prijavljeni ispiti</Text>
         <View style={styles.predmet}>
-        <Text style = {styles.naslov1}>Aktivni ispiti</Text>
         <Text style = {styles.naslov} id = "t1">Predmet</Text>
         <Text style = {styles.prvi} id = "t2">Vjestacka inteligencija</Text>
         <Text style = {styles.drugi} id = "t3">Organizacija softverskog projekta</Text>
@@ -53,6 +53,7 @@ class Ispiti extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
