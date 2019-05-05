@@ -8,7 +8,13 @@
   "dependencies": {
     "axios": "^0.18.0",
     "expo": "^32.0.0",
+<<<<<<< HEAD
+=======
+    "express": "^4.16.4",
+    "react": "16.5.0",
+>>>>>>> 438335e9e29fca04ed4eeadbcb3996975968fcb4
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native-elements": "^1.1.0",
     "react-native-responsive-fontsize": "^0.1.8",
     "react-navigation": "^3.9.1",
     "react-tabs": "^3.0.0"

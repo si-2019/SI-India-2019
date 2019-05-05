@@ -1,24 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import PodaciOStudentu from './PodaciOStudentu';
+import Slika from './Slika';
 
-import { StyleSheet, View, Text } from 'react-native';
-
-export default class Student extends Component {
-  //Komponenta za podatke o studentu
-  render() {
-    return (
-      <View style={styles.MainContainer}>
-        <Text style={{ fontSize: 23 }}> Podaci o studentu </Text>
-      </View>
-    );
-  }
+const Student = (props) => {
+  return (
+  <ScrollView>   
+      <Slika />
+      <PodaciOStudentu/>
+  </ScrollView>
+)
 }
-
-const styles = StyleSheet.create({
-  MainContainer: {
-    flex: 1,
-    paddingTop: 20,
-    alignItems: 'center',
-    marginTop: 50,
-    justifyContent: 'center',
-  },
-});
+  
+export default Student
