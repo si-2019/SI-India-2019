@@ -8,12 +8,16 @@
   "dependencies": {
     "axios": "^0.18.0",
     "expo": "^32.0.0",
-    "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-responsive-fontsize": "^0.1.8",
-    "react-navigation": "^3.9.1"
+    "react-navigation": "^3.9.1",
+    "react-tabs": "^3.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "schedule": "^0.4.0"
+  },
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

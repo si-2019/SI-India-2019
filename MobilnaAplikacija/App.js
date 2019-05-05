@@ -13,20 +13,17 @@ import Screen3 from './November/Izvjestaji';
 import Screen4 from './India/Ispiti';
 import Screen5 from './India/Potvrde';
 import Screen6 from './India/Raspored';
-/*
-export default class App extends React.Component {
+
+/*export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <AktivniIspiti></AktivniIspiti>
+      <Screen1/>
    </View>
-      <View>
-        <Screen1/>
-      </View>
     );
   }
-}
-*/
+}*/
+
 
 class NavigationDrawerStructure extends Component {
   toggleDrawer = () => {
