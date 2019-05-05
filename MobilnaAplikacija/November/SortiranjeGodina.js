@@ -9,7 +9,7 @@ import {
 
 export default class SortiranjeGodina extends Component {
     racunanjeProsjeka(nizOcjena) {
-        var prosjek= 0;
+        var prosjek = 0;
         for (var i = 0; i < nizOcjena.length; i++) {
             prosjek += nizOcjena[i];
         }
@@ -22,7 +22,7 @@ export default class SortiranjeGodina extends Component {
             prva: [6, 6, 6, 7, 6, 9, 8, 8, 8, 6],
             druga: [6, 7, 8, 8, 7, 9, 7, 8, 8, 7, 7, 9],
             treca: [10, 9, 9, 8, 7, 7, 9, 8, 7, 6],
-            godine:[],
+            godine: [],
             semestri: []
         }
     }
@@ -49,23 +49,23 @@ export default class SortiranjeGodina extends Component {
         var prosjekTrece = this.racunanjeProsjeka(this.state.treca);
         var godineProsjek = [
             {
-                godina : 'Prva godina',
-                prosjek : prosjekPrve
+                godina: 'Prva godina',
+                prosjek: prosjekPrve
             },
             {
-                godina : 'Druga godina',
-                prosjek : prosjekDruge
+                godina: 'Druga godina',
+                prosjek: prosjekDruge
             },
             {
-                godina : 'Treća godina',
-                prosjek : prosjekTrece
+                godina: 'Treća godina',
+                prosjek: prosjekTrece
             },
         ];
-        var prviSemestar = this.racunanjeProsjeka(this.state.prva.slice(0, this.state.prva.length/2));
-        var drugiSemestar = this.racunanjeProsjeka(this.state.prva.slice(this.state.prva.length/2, this.state.prva.length));
-        var treciSemestar = this.racunanjeProsjeka(this.state.druga.slice(0, this.state.druga.length/2));
-        var cetvrtiSemestar = this.racunanjeProsjeka(this.state.druga.slice(this.state.druga.length/2, this.state.druga.length));
-        var petiSemestar = this.racunanjeProsjeka(this.state.treca.slice(0, this.state.treca.length/2));
+        var prviSemestar = this.racunanjeProsjeka(this.state.prva.slice(0, this.state.prva.length / 2));
+        var drugiSemestar = this.racunanjeProsjeka(this.state.prva.slice(this.state.prva.length / 2, this.state.prva.length));
+        var treciSemestar = this.racunanjeProsjeka(this.state.druga.slice(0, this.state.druga.length / 2));
+        var cetvrtiSemestar = this.racunanjeProsjeka(this.state.druga.slice(this.state.druga.length / 2, this.state.druga.length));
+        var petiSemestar = this.racunanjeProsjeka(this.state.treca.slice(0, this.state.treca.length / 2));
         var semestriProsjek = [
             {
                 id: 1,
@@ -93,36 +93,41 @@ export default class SortiranjeGodina extends Component {
                 prosjek: petiSemestar
             }
         ];
+        var sveOcjene = this.state.prva.concat(this.state.druga, this.state.treca);
+        var ukupniProsjek = this.racunanjeProsjeka(sveOcjene);
 
-        godineProsjek.sort(function(a,b){
-            return parseInt(b.prosjek)  - parseInt(a.prosjek);
+        godineProsjek.sort(function (a, b) {
+            return parseInt(b.prosjek) - parseInt(a.prosjek);
         })
         return (
             <View style={styles.MainContainer}>
                 <View>
-                    <Text style={{ fontSize: 18,  fontWeight: 'bold' }}> Prosjeci po godinama sortirani{"\n"} </Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}> Prosjeci po godinama sortirani{"\n"} </Text>
                     <FlatList
-                        data = {[
-                            {key:godineProsjek[0].godina, value:godineProsjek[0].prosjek},
-                            {key:godineProsjek[1].godina, value:godineProsjek[1].prosjek},
-                            {key:godineProsjek[2].godina, value:godineProsjek[2].prosjek}
+                        data={[
+                            { key: godineProsjek[0].godina, value: godineProsjek[0].prosjek },
+                            { key: godineProsjek[1].godina, value: godineProsjek[1].prosjek },
+                            { key: godineProsjek[2].godina, value: godineProsjek[2].prosjek }
                         ]}
-                        renderItem={({item}) => <Text style={styles.item}>{item.key} : {item.value}</Text>}
-                        renderItem={({item}) => <Text style={styles.item}>{item.key} : {item.value}</Text>}
-                        renderItem={({item}) => <Text style={styles.item}>{item.key} : {item.value}</Text>}
+                        renderItem={({ item }) => <Text style={styles.item}>{item.key} : {item.value}</Text>}
+                        renderItem={({ item }) => <Text style={styles.item}>{item.key} : {item.value}</Text>}
+                        renderItem={({ item }) => <Text style={styles.item}>{item.key} : {item.value}</Text>}
                     />
                 </View>
                 <View>
-                    <Text style={{ fontSize: 18,  fontWeight: 'bold', marginTop: 10 }}> Prosjeci po semestrima{"\n"}</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 10 }}> Prosjeci po semestrima{"\n"}</Text>
                     <FlatList
                         data={semestriProsjek}
                         keyExtractor={item => item.id.toString()}
-                        renderItem={({item}) => (
+                        renderItem={({ item }) => (
                             <Text style={styles.item}>
                                 {item.title} {item.prosjek}
                             </Text>
-                        )}                     
+                        )}
                     />
+                </View>
+                <View>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 10 }}> Ukupan prosjek: {ukupniProsjek}{"\n"}</Text>
                 </View>
             </View>
         );
@@ -164,7 +169,7 @@ const getSemester = [
         id: 5,
         title: '5.'
     }
-] 
+]
 
 const styles = StyleSheet.create({
     MainContainer: {
