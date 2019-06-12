@@ -4,7 +4,7 @@ const moment = require('moment');
 const db = require('./modeli/db.js');
 const sequelize = require('sequelize');
 var app = express();
-const port=31909;
+const port=31910;
 
 const StudentIspit = db.sequelize.import(__dirname+'/modeli/StudentIspit.js');
 const Ispit = db.sequelize.import(__dirname+'/modeli/Ispit.js');
@@ -57,15 +57,20 @@ app.get('/student/:id/prijavljeni',  function(req, res) {
         if(rez.length == 0) res.send(greska);
         else {
             let brojac = rez.length;
+            console.log("Ispiti: " + JSON.stringify(rez));
             rez.forEach(red => {
+                //console.log("Ispit:" + red);
                 dajIspitPoId(red.ispitId).then(function(ispit) {
-                    dajNazivPredmeta(ispit.idPredmet).then(function(vracenoImePredmeta) {
-                        brojac--;
-                        niz.push({ predmet: vracenoImePredmeta.naziv, tip: ispit.tipIspita, rokPrijave: ispit.rokPrijave, datumIspita: ispit.termin, napomena: ispit.napomena, prijavljen: 1, popunjen: ispit.kapacitet});
+                    //console.log("Ispit:" + JSON.stringify(ispit));
+                    if(ispit != null && ispit != undefined) {
+                        dajNazivPredmeta(ispit.idPredmet).then(function(vracenoImePredmeta) { //cannot read property idPredmet of null
+                            brojac--;
+                            niz.push({ predmet: vracenoImePredmeta.naziv, tip: ispit.tipIspita, rokPrijave: ispit.rokPrijave, datumIspita: ispit.termin, napomena: ispit.napomena, prijavljen: 1, popunjen: ispit.kapacitet});
 
-                        if(brojac == 0)
-                            res.send(niz);
-                    });  
+                            if(brojac == 0)
+                                res.send(niz);
+                        });  
+                    }
                 });
             });
         }   
@@ -92,6 +97,7 @@ var vratiIspis = function(ispitiOdgovor, datetime) {
     var niz = [];
     return new Promise(function(resolve, reject) {
         let ispitiOdgovorFilter = ispitiOdgovor.filter(ispit => ispit.rokPrijave != null && new Date(ispit.rokPrijave) > new Date(datetime));
+        console.log("ispitiOdgovorFilter: " + JSON.stringify(ispitiOdgovorFilter));
         if(ispitiOdgovorFilter.length == 0) resolve(niz);
         else { 
             let brojac = ispitiOdgovorFilter.length; 
@@ -122,23 +128,32 @@ app.get('/student/:id/aktivni', function(req, res) {
         if (odgovor.length == 0) res.send(greska);
         else {
             let brojac = odgovor.length;
-            odgovor.forEach(elementOdgovora => {
-                dajIspitePredmet(elementOdgovora.idPredmet).then(function(ispitiOdgovor) {
-                    vratiIspis(ispitiOdgovor, datetime).then(function(izlazniNiz) {
-                        
-                        if (izlazniNiz.length == 0) { res.send(niz); }
-                        else {
-                            izlazniNiz.forEach(objektNiza => {
-                                brojac--;
-                                niz.push(objektNiza);
+            console.log("Odgovor: " + JSON.stringify(odgovor)); //odgovor je ok
+            odgovor.forEach(function(elementOdgovora) {
+                //console.log("Predmet: " + elementOdgovor.idPredmet); 
+                if(elementOdgovora != null && elementOdgovora != undefined) {
+                    dajIspitePredmet(elementOdgovora.idPredmet).then(function(ispitiOdgovor) {
+                        if(ispitiOdgovor != undefined && ispitiOdgovor != null) {
+                            console.log("Ispit: " + ispitiOdgovor.idIspit) //Ispit: undefined
+                            vratiIspis(ispitiOdgovor, datetime).then(function(izlazniNiz) {
+                                
+                                if (izlazniNiz.length == 0) { res.send(niz); } // da li treba prekinuti??
+                                else {
+                                    izlazniNiz.forEach(objektNiza => {
+                                        brojac--;
+                                        niz.push(objektNiza);
+                                    })
+                                    
+                                    if (brojac <= 0 || izlazniNiz.length == 0) { res.send(niz); }
+                                }
                             })
-                            
-                            if (brojac <= 0 || izlazniNiz.length == 0) { res.send(niz); }
                         }
-                    })
-                });
+                    }).catch((error) => {
+                        //assert.isNotOk(error,'Promise error');
+                        //done();
+                      });
+                }
             });
-        
         }
     });
  
