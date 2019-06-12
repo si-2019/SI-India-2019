@@ -62,9 +62,8 @@ app.get('/student/:id/prijavljeni',  function(req, res) {
                 //console.log("Ispit:" + red);
                 dajIspitPoId(red.ispitId).then(function(ispit) {
                     //console.log("Ispit:" + JSON.stringify(ispit));
-                    if(ispit != null && ispit != undefined) {
-                        dajNazivPredmeta(ispit.idPredmet).then(function(vracenoImePredmeta) { //cannot read property idPredmet of null
-                            brojac--;
+                    if(ispit != null && ispit != undefined && ispit != []) {
+                        dajNazivPredmeta(ispit.idPredmet).then(function(vracenoImePredmeta) { 
                             niz.push({ predmet: vracenoImePredmeta.naziv, tip: ispit.tipIspita, rokPrijave: ispit.rokPrijave, datumIspita: ispit.termin, napomena: ispit.napomena, prijavljen: 1, popunjen: ispit.kapacitet});
 
                             if(brojac == 0)
@@ -130,11 +129,9 @@ app.get('/student/:id/aktivni', function(req, res) {
             let brojac = odgovor.length;
             console.log("Odgovor: " + JSON.stringify(odgovor)); //odgovor je ok
             odgovor.forEach(function(elementOdgovora) {
-                //console.log("Predmet: " + elementOdgovor.idPredmet); 
-                if(elementOdgovora != null && elementOdgovora != undefined) {
+                if(elementOdgovora != null && elementOdgovora != undefined && elementOdgovora != []) {
                     dajIspitePredmet(elementOdgovora.idPredmet).then(function(ispitiOdgovor) {
-                        if(ispitiOdgovor != undefined && ispitiOdgovor != null) {
-                            console.log("Ispit: " + ispitiOdgovor.idIspit) //Ispit: undefined
+                        if(ispitiOdgovor != undefined && ispitiOdgovor != null && ispitiOdgovor != []) {
                             vratiIspis(ispitiOdgovor, datetime).then(function(izlazniNiz) {
                                 
                                 if (izlazniNiz.length == 0) { res.send(niz); } // da li treba prekinuti??
