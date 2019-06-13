@@ -65,15 +65,15 @@ app.get('/student/:id/prijavljeni',  function(req, res) {
                     if(ispit != null && ispit != undefined && ispit != []) {
                         dajNazivPredmeta(ispit.idPredmet).then(function(vracenoImePredmeta) { 
                             niz.push({ predmet: vracenoImePredmeta.naziv, tip: ispit.tipIspita, rokPrijave: ispit.rokPrijave, datumIspita: ispit.termin, napomena: ispit.napomena, prijavljen: 1, popunjen: ispit.kapacitet});
-
+                            brojac--;
                             if(brojac == 0)
                                 res.send(niz);
-                        });  
+                        }).catch(e => {console.log(e)}); 
                     }
-                });
+                }).catch(e => {console.log(e)});
             });
         }   
-    });
+    }).catch(e => {console.log(e)});
 });
 
 var dajPredmetStudent = function(id) {
@@ -143,16 +143,13 @@ app.get('/student/:id/aktivni', function(req, res) {
                                     
                                     if (brojac <= 0 || izlazniNiz.length == 0) { res.send(niz); }
                                 }
-                            })
+                            }).catch(e => {console.log(e)});
                         }
-                    }).catch((error) => {
-                        //assert.isNotOk(error,'Promise error');
-                        //done();
-                      });
+                    }).catch(e => {consol.log(e)});
                 }
             });
         }
-    });
+    }).catch(e => {console.log(e)});
  
 });
 
